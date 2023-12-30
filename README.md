@@ -1,3 +1,7 @@
+![so_longe](https://github.com/OnnaMcadva/42_Prague_So_Long/assets/94723781/0bf46f5f-579b-40ff-841e-fd45f7c0870d)
+
+
+
 # 42_Prague_So_Long
 
 This project is a very small 2D game.
