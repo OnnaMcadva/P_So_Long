@@ -26,7 +26,7 @@ static void	ft_wall(t_game *game)
 			if (game->map[0][y] != '1' || game->map[game->row - 1][y] != '1')
 				ft_exit("Error\nThe map is not surrounded by walls", game);
 			if (game->map[x][0] != '1' || game->map[x][game->col - 1] != '1')
-				ft_exit("Error\nThe map is not surrounded by wallg", game);
+				ft_exit("Error\nThe map is not surrounded by walls", game);
 			y++;
 		}
 		x++;
