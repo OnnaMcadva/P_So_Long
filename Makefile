@@ -6,7 +6,7 @@
 #    By: annavm <annavm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 21:18:47 by anmakaro          #+#    #+#              #
-#    Updated: 2024/04/23 10:24:39 by annavm           ###   ########.fr        #
+#    Updated: 2025/06/29 18:27:14 by annavm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,9 @@ MLXFLAGS      = -L$(MINILIBX_PATH) -lmlx -I$(MINILIBX_PATH) -lXext -lX11
 NAME          = so_long
 CC            = cc
 FLAGS         = -Wall -Werror -Wextra -g
-SRC           = main.c map_checks.c map_info.c map_size.c move.c passability_check.c utilities.c
+SRC           = so_long.c map_checks.c map_info.c map_size.c move.c passability_check.c free_exit.c
 OBJ           = $(SRC:.c=.o)
 
-# Цели
 all: $(LIBFT) $(NAME)
 
 $(LIBFT):
@@ -61,5 +60,4 @@ fclean: clean
 re: fclean all
 	@echo "$(BLUE)Cleaned and rebuilt everything for $(NAME).$(DEF_COLOR)"
 
-# Phony targets
 .PHONY: all clean fclean re

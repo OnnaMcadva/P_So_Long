@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmakaro <anmakaro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:53:57 by anmakaro          #+#    #+#             */
-/*   Updated: 2024/04/23 13:53:59 by anmakaro         ###   ########.fr       */
+/*   Updated: 2025/06/29 20:10:34 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	texturs(t_game *game)
+void	textures(t_game *game)
 {
 	int	width;
 	int	hight;

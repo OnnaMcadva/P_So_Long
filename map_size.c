@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_size.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmakaro <anmakaro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:54:04 by anmakaro          #+#    #+#             */
-/*   Updated: 2024/04/23 13:54:07 by anmakaro         ###   ########.fr       */
+/*   Updated: 2025/06/29 20:06:42 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,24 @@ int	size_row(int fd_x)
 		exit(0);
 	}
 	return (x);
+}
+
+void	write_map(t_game *game, int fd)
+{
+	int		i;
+	char	*c;
+	int		x;
+
+	i = 0;
+	x = game->row + 1;
+	game->map = (char **)malloc(sizeof(char *) * x);
+	if (!game->map)
+		ft_exit("Error\n", game);
+	while (i < x)
+	{
+		c = get_next_line(fd);
+		game->map[i] = ft_strtrim(c, "\n");
+		i++;
+		free(c);
+	}
 }

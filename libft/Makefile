@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anmakaro <anmakaro@student.42.fr>          +#+  +:+       +#+         #
+#    By: annavm <annavm@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 21:18:47 by anmakaro          #+#    #+#              #
-#    Updated: 2024/04/23 13:48:18 by anmakaro         ###   ########.fr        #
+#    Updated: 2025/06/29 18:38:34 by annavm           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = ft_strncmp.c \
 	ft_putnbr_fd.c \
 	get_next_line.c \
 	get_next_line_utils.c \
+	ft_strcmp.c
 
 OBJ = $(SRC:.c=.o)
 
