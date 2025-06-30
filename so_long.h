@@ -6,7 +6,7 @@
 /*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:54:27 by anmakaro          #+#    #+#             */
-/*   Updated: 2025/06/29 20:16:55 by annavm           ###   ########.fr       */
+/*   Updated: 2025/06/30 21:38:03 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@
 # define HIGHT 128
 
 # define ERROR "\n\033[6;91mError Error Error!\033[0m"
-# define ARG_BER "\n\033[38;5;214mPut ./so_long maps/map?.ber\033[0m"
+# define ARG_BER "\033[38;5;214mPut ./so_long maps/map?.ber\033[0m"
 # define ARG_LOAD "\n\033[0;92mLoading!..\033[0m\n"
 # define ARG_EMPT "\n\033[0;94mThe file is empty or not exist.\033[0m"
 # define WON "\n\033[0;96mYou Won! To exit press any bottom on kyeboard\033[0m"
+# define INIT_G "\033[6;91mError\nFailed to initialize game\033[0m"
+# define SURR "\033[6;91mError\nThe map is not surrounded by walls\033[0m"
+# define PASS "\033[6;91mError\nImpossibale to pass\033[0m"
 
 typedef struct s_img
 {
@@ -78,16 +81,16 @@ void	start_game(t_game *game);
 int		main(int argc, char **argv);
 
 /* free_exit.c */
-void	free_img(t_game *game);
-void	free_map_passability(t_game *game);
-void	free_map(t_game *game);
-void	ft_exit(char *s, t_game *game);
-int	close_window(t_game *game);
+void	clean_graphics(t_game *game);
+void	clean_pathmap(t_game *game);
+void	free_level(t_game *game);
+void	panic(char *s, t_game *game);
+int	close_game(t_game *game);
 
 /* map_checks.c */
-void	map_correct(t_game *game);
-void	map_check(t_game *game);
-void	all_map_checks(t_game *game, int fd_map);
+void	check_rect(t_game *game);
+void	validate_elems(t_game *game);
+void	validate_map(t_game *game, int fd_map);
 
 /* map_info.c */
 void	textures(t_game *game);
@@ -101,14 +104,14 @@ int		size_row(int fd_x);
 void	write_map(t_game *game, int fd);
 
 /* move.c */
-void	end_game(t_game *game, int col, int row);
-void	ft_helpa(int n);
-int		move_key(int keycode, t_game *game);
+void	win_game(t_game *game, int col, int row);
+void	print_step(int n);
+int		handle_input(int keycode, t_game *game);
 
 /* passability_check.c */
-void	map_test_malloc(t_game *game, int fd);
-bool	test(t_game *game, int x, int y);
-int		passability(t_game *game);
-void	passability_check(t_game *game, int fd_map);
+void	create_path_map(t_game *game, int fd);
+bool	check_path(t_game *game, int x, int y);
+int		is_map_passable(t_game *game);
+void	validate_path(t_game *game, int fd_map);
 
 #endif

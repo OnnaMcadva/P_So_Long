@@ -6,13 +6,13 @@
 /*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:53:44 by anmakaro          #+#    #+#             */
-/*   Updated: 2025/06/29 19:38:47 by annavm           ###   ########.fr       */
+/*   Updated: 2025/06/30 21:33:50 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	ft_wall(t_game *game)
+static void	validate_borders(t_game *game)
 {
 	int	x;
 	int	y;
@@ -24,16 +24,16 @@ static void	ft_wall(t_game *game)
 		while (game->map[x][y])
 		{
 			if (game->map[0][y] != '1' || game->map[game->row - 1][y] != '1')
-				ft_exit("Error\nThe map is not surrounded by walls", game);
+				panic(SURR, game);
 			if (game->map[x][0] != '1' || game->map[x][game->col - 1] != '1')
-				ft_exit("Error\nThe map is not surrounded by walls", game);
+				panic(SURR, game);
 			y++;
 		}
 		x++;
 	}
 }
 
-void	map_correct(t_game *game)
+void	check_rect(t_game *game)
 {
 	int	y;
 	int	x;
@@ -46,13 +46,13 @@ void	map_correct(t_game *game)
 	{
 		y = ft_strlen(game->map[x]);
 		if (y != size)
-			ft_exit("Error\nMap is not rectangular", game);
+			panic("Error\nMap is not rectangular", game);
 		x++;
 	}
-	ft_wall(game);
+	validate_borders(game);
 }
 
-static void	char_check(t_game *game, char c, int x, int y)
+static void	check_tile(t_game *game, char c, int x, int y)
 {
 	if (c == 'C')
 		game->score++;
@@ -67,10 +67,10 @@ static void	char_check(t_game *game, char c, int x, int y)
 	else if (c == '1' || c == '0')
 		return ;
 	else
-		ft_exit("Error\nInvalid characters", game);
+		panic("Error\nInvalid characters", game);
 }
 
-void	map_check(t_game *game)
+void	validate_elems(t_game *game)
 {
 	int	x;
 	int	y;
@@ -81,27 +81,27 @@ void	map_check(t_game *game)
 		y = 0;
 		while (game->map[x][y])
 		{
-			char_check(game, game->map[x][y], x, y);
+			check_tile(game, game->map[x][y], x, y);
 			y++;
 		}
 		x++;
 	}
 	if (game->score == 0)
-		ft_exit("Error\nThere is no collectible", game);
+		panic("Error\nThere is no collectible", game);
 	else if (game->exit == 0)
-		ft_exit("Error\nThere is no exit", game);
+		panic("Error\nThere is no exit", game);
 	else if (game->exit > 1)
-		ft_exit("Error\nThere must be only one exit", game);
+		panic("Error\nThere must be only one exit", game);
 	else if (game->player == 0)
-		ft_exit("Error\nThere is no player", game);
+		panic("Error\nThere is no player", game);
 	else if (game->player > 1)
-		ft_exit("Error\nOnly one player on map ", game);
+		panic("Error\nOnly one player on map ", game);
 }
 
-void	all_map_checks(t_game *game, int fd_map)
+void	validate_map(t_game *game, int fd_map)
 {
 	ft_putendl_fd(ARG_LOAD, 1);
-	map_check(game);
-	map_correct(game);
-	passability_check(game, fd_map);
+	validate_elems(game);
+	check_rect(game);
+	validate_path(game, fd_map);
 }

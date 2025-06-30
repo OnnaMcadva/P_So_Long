@@ -6,7 +6,7 @@
 /*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:54:04 by anmakaro          #+#    #+#             */
-/*   Updated: 2025/06/29 20:06:42 by annavm           ###   ########.fr       */
+/*   Updated: 2025/06/30 21:27:58 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	write_map(t_game *game, int fd)
 	x = game->row + 1;
 	game->map = (char **)malloc(sizeof(char *) * x);
 	if (!game->map)
-		ft_exit("Error\n", game);
+		panic("Error\n", game);
 	while (i < x)
 	{
 		c = get_next_line(fd);

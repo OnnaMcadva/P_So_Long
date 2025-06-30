@@ -6,7 +6,7 @@
 /*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:53:18 by anmakaro          #+#    #+#             */
-/*   Updated: 2025/06/29 20:16:06 by annavm           ###   ########.fr       */
+/*   Updated: 2025/06/30 21:38:03 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	map_name(const char *s)
 	return (1);
 }
 
-static	void	map_init(t_game *game)
+static	void	map_reset(t_game *game)
 {
 	game->player_x = 0;
 	game->player_y = 0;
@@ -55,8 +55,8 @@ void	start_game(t_game *game)
 			game->row * HIGHT, "So_long");
 	textures(game);
 	render_img(game);
-	mlx_key_hook(game->win, move_key, game);
-	mlx_hook(game->win, 17, 0, close_window, game);
+	mlx_key_hook(game->win, handle_input, game);
+	mlx_hook(game->win, 17, 0, close_game, game);
 	mlx_expose_hook(game->win, render_img, game);
 	mlx_loop(game->mlx);
 }
@@ -78,7 +78,7 @@ static int	init_game(t_game *game, const char *filename)
 	game->col = size_col(fd_y);
 	fd = open(filename, O_RDONLY);
 	write_map(game, fd);
-	all_map_checks(game, fd_map);
+	validate_map(game, fd_map);
 	close(fd_x);
 	close(fd_y);
 	close(fd);
@@ -92,14 +92,13 @@ int	main(int argc, char **argv)
 
 	if (argc != 2 || !map_name(argv[1]))
 	{
-		ft_putendl_fd(ERROR, 1);
 		ft_putendl_fd(ARG_BER, 1);
-		exit(0);
+		exit(1);
 	}
-	map_init(&game);
+	map_reset(&game);
 	if (!init_game(&game, argv[1]))
 	{
-		ft_putendl_fd("Error\nFailed to initialize game", 1);
+		ft_putendl_fd(INIT_G, 1);
 		exit(1);
 	}
 	start_game(&game);

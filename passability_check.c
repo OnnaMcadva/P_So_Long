@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   passability_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anmakaro <anmakaro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: annavm <annavm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:54:20 by anmakaro          #+#    #+#             */
-/*   Updated: 2024/04/23 13:54:22 by anmakaro         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:27:58 by annavm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	map_test_malloc(t_game *game, int fd)
+void	create_path_map(t_game *game, int fd)
 {
 	int		i;
 	char	*c;
@@ -22,7 +22,7 @@ void	map_test_malloc(t_game *game, int fd)
 	x = game->row + 1;
 	game->map_passability = (char **)malloc(sizeof(char *) * x);
 	if (!game->map_passability)
-		free_img(game);
+		clean_graphics(game);
 	while (i < x)
 	{
 		c = get_next_line(fd);
@@ -32,7 +32,7 @@ void	map_test_malloc(t_game *game, int fd)
 	}
 }
 
-bool	test(t_game *game, int x, int y)
+bool	check_path(t_game *game, int x, int y)
 {
 	static bool		exit = false;
 	static int		ys = 0;
@@ -48,14 +48,14 @@ bool	test(t_game *game, int x, int y)
 	if (game->map_passability[x][y] == 'C')
 		ys++;
 	game->map_passability[x][y] = 'X';
-	test(game, x + 1, y);
-	test(game, x, y + 1);
-	test(game, x - 1, y);
-	test(game, x, y - 1);
+	check_path(game, x + 1, y);
+	check_path(game, x, y + 1);
+	check_path(game, x - 1, y);
+	check_path(game, x, y - 1);
 	return (ys == game->score && exit);
 }
 
-int	passability(t_game *game)
+int	is_map_passable(t_game *game)
 {
 	int		x;
 	int		y;
@@ -63,18 +63,18 @@ int	passability(t_game *game)
 
 	x = game->player_x;
 	y = game->player_y;
-	valid = test(game, x, y);
+	valid = check_path(game, x, y);
 	return (valid);
 }
 
-void	passability_check(t_game *game, int fd_map)
+void	validate_path(t_game *game, int fd_map)
 {
-	map_test_malloc(game, fd_map);
-	if (!passability(game))
+	create_path_map(game, fd_map);
+	if (!is_map_passable(game))
 	{
-		free_map_passability(game);
+		clean_pathmap(game);
 		close(fd_map);
-		ft_exit("Error\nImpossibale to pass", game);
+		panic(PASS, game);
 	}
-	free_map_passability(game);
+	clean_pathmap(game);
 }
